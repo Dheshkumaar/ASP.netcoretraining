@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WfmWeb.Models.Softlocks>
+
+@{
+    ViewData["Title"] = "Wfmmember";
+}
+
+<h1 class="align-middle">WFMmember Screen</h1>
+
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.employee_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.manager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.reqdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.requestmessage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.employee_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.manager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.reqdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.requestmessage)
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-outline-primary"
+                        data-url='@Url.ActionLink("_request","Home",item)'>
+                    View Details
+                </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="modal fade" id="Modal" role="dialog" ></div>
+
+<script>
+    $('.btn-outline-primary').click(function () {
+        var url = $(this).data('url');
+        console.log(url);
+        $.get(url, function (data) {
+            $("#Modal").html(data);
+            $("#Modal").modal('show');
+        });
+    });
+</script>
+
