@@ -9,6 +9,7 @@ namespace API_Training_WFM.Abstractions
     public interface ISoftlocksService
     {
         IEnumerable<Softlocks> GetSoftlocks();
+        Softlocks GetSoftlocksbyid(int id);
         bool AddSoftlocks(Softlocks softlocks);
         bool UpdateSoftlocks(Softlocks softlocks); 
     }

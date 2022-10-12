@@ -21,6 +21,7 @@ namespace API_Training_WFM
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +32,17 @@ namespace API_Training_WFM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("*");
+                                      policy.AllowAnyHeader();
+                                      policy.AllowAnyMethod();
+                                  });
+            });
+
             services.AddControllers();
             services.AddDbContext<WFMDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultCon")));
             services.TryAddScoped<IUsersService, UsersService>();
@@ -51,6 +63,8 @@ namespace API_Training_WFM
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API_Training_WFM v1"));
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 

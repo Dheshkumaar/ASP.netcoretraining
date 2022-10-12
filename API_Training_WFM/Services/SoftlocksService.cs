@@ -20,6 +20,12 @@ namespace API_Training_WFM.Services
             return result;
         }
 
+        public Softlocks GetSoftlocksbyid(int id)
+        {
+            var result = _wfmDbContext.Softlocks.FirstOrDefault(s => s.lockid == id);
+            return result;
+        }
+
         public bool UpdateSoftlocks(Softlocks softlocks)
         {
             var softlock = _wfmDbContext.Softlocks.Where(x => x.lockid == softlocks.lockid).FirstOrDefault();

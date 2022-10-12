@@ -39,6 +39,22 @@ namespace API_Training_WFM.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        [Route("GetSoftLocksById")]
+        public ActionResult GetSoftLocksById(int lockid)
+        {
+            try
+            {
+                var softlock = _softlocksService.GetSoftlocksbyid(lockid);
+                return Ok(softlock);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Exception occurred " + ex.Message.ToString());
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         [Route("InsertSoftlocks")]
         public IActionResult InsertSoftlocks(Softlocks softlocks)
